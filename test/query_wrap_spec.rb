@@ -3,10 +3,8 @@ require 'rspec'
   #TODO LIST
   # A static class named Wrap or Wrapper that contains a function that format a query
   # The function has to split a text like a word processor does
-  # - should return the sentence split by spaces when the column is lower than the sentence
   # - should return the sentence split in the last space when two words fits in the column size
   # EXAMPLES:
-  # ("hello how are you", 5) -> "hello\nhow\nare\nyou"
   # ("hello is this", 9) -> "hello is\nthis"
 
 
@@ -15,8 +13,14 @@ def wrap(query, column)
     return query
   end
   if query.size > column
-    first_word = query[0, column]
-    second_word = query[column, query.size - 1]
+    cut_position = query[0, column + 1].rindex(' ')
+    if cut_position.eql? nil
+      first_word = query[0, column]
+      second_word = query[column, query.size - 1]
+      return first_word + "\n" + second_word
+    end
+    first_word = query[0, cut_position]
+    second_word = wrap(query[cut_position + 1, query.size - 1], column)
     return first_word + "\n" + second_word
   end
   query
@@ -38,6 +42,9 @@ describe 'Wrapper' do
   it 'should return the word split when the column is lower than the word' do
     expect(wrap('word', 3)).to(eq("wor\nd"))
   end
-end
 
-puts "wor\nd"
+  it 'should return the sentence split by spaces when the column is lower than the sentence' do
+    expect(wrap('hello how are you', 5)).to(eq("hello\nhow\nare\nyou"))
+  end
+
+end
