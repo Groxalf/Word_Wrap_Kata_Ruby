@@ -11,7 +11,7 @@ def wrap(query, column)
     cut_position = query[0, column + 1].rindex(' ')
     if cut_position.eql? nil
       first_word = query[0, column]
-      second_word = query[column, query.size - 1]
+      second_word = wrap(query[column, query.size - 1], column)
       return first_word + "\n" + second_word
     end
     first_word = query[0, cut_position]
@@ -44,6 +44,10 @@ describe 'Wrapper' do
 
   it 'should return the sentence split in the last space when two words fits in the column size' do
     expect(wrap('hello is this', 9)).to(eq("hello is\nthis"))
+  end
+
+  it 'should return the sentence split when there are no spaces' do
+    expect(wrap('helloisthis', 2)).to(eq("he\nll\noi\nst\nhi\ns"))
   end
 
 end
