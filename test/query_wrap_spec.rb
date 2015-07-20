@@ -19,5 +19,11 @@ require 'rspec'
 
 
 def wrap(query, column)
+  ''
+end
 
+describe 'Wrapper' do
+  it 'should return empty string when an empty string is the query input' do
+    expect(wrap('', 0)).to(eq(''))
+  end
 end
