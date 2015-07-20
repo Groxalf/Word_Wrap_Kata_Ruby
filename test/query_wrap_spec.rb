@@ -1,24 +1,10 @@
 require 'rspec'
-
+require_relative '../wrapper'
   # A static class named Wrap or Wrapper that contains a function that format a query
   # The function has to split a text like a word processor does
 
 def wrap(query, column)
-  if column == 0
-    return query
-  end
-  if query.size > column
-    cut_position = query[0, column + 1].rindex(' ')
-    if cut_position.eql? nil
-      first_word = query[0, column]
-      second_word = wrap(query[column, query.size - 1], column)
-      return first_word + "\n" + second_word
-    end
-    first_word = query[0, cut_position]
-    second_word = wrap(query[cut_position + 1, query.size - 1], column)
-    return first_word + "\n" + second_word
-  end
-  query
+  Wrapper.wrap(query, column)
 end
 
 describe 'Wrapper' do
