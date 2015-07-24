@@ -11,14 +11,14 @@ class Wrapper
 
   def self.middle_space_query_divider(column, cut_position, query)
     first_word = query[0, cut_position]
-    remaining_query = wrap(query[cut_position + 1, query.size - 1], column)
-    return first_word + "\n" + remaining_query
+    remaining_words = wrap(query[cut_position + 1, query.size - 1], column)
+    return first_word + "\n" + remaining_words
   end
 
   def self.no_space_query_divider(column, query)
     first_word = query[0, column]
-    remaining_query = wrap(query[column, query.size - 1], column)
-    return first_word + "\n" + remaining_query
+    remaining_words = wrap(query[column, query.size - 1], column)
+    return first_word + "\n" + remaining_words
   end
 
   def self.get_cut_position(column, query)
